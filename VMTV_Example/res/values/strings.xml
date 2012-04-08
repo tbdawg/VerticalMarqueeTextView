@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="vmtvText">\n\n\n\n\n\n\n\n\n\nThis is an example of how this vertical marquee textview works.\nThis is an example of how this vertical marquee textview works.\nThis is an example of how this vertical marquee textview works.\nThis is an example of how this vertical marquee textview works.</string>
+    <string name="app_name">VMTV_Example</string>
+
+</resources>

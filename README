@@ -1,0 +1,18 @@
+This is an Android class to create a vertical textview marquee e.g. vertical autoscrolling textview. It may not be the best but it is what I came up with after several tries to get something working. Modify it as needed.
+
+Usage:
+
+Add VerticalMarqueeTextView.java (VMTV) to your project.
+Change the VMTV package to that of your project.
+Create an instance of the VMTV class.
+In the onCreate() method instantiate your instance of the VMTV class.
+ optional: call the pauseMarquee() method to pause it until Activity starts.
+ 
+You should make a call to the resumeMarquee() method in the Activities onResume() method. Likewise a call to pauseMarquee() should be made in the Activities onPause() method.
+
+There should be a call to stopMarquee() in the Activities onDestroy() method.
+NOTE: Once the marquee has been stopped it cannot be restarted. This is due to the behavior of the AsynTask within the VMTV class.
+
+NOTE: If you add additional padding to the TextView being passed to the VMTV then you may need to modify the textViewNotDrawn() method within the subclassed AsynTask of the VMTV class in order to get the proper pixel height of your TextView.
+
+See Example.java, main.xml, strings.xml, and VerticalMarqueeTextView.java. 
