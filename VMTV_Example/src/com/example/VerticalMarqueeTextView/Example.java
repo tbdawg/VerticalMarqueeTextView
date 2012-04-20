@@ -3,11 +3,9 @@ package com.example.VerticalMarqueeTextView;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.widget.TextView;
 
 public class Example extends Activity {
 
-	private TextView textView;
 	// Create an instance of the VerticalMarqueeTextView class
 	// to be used with the above TextView.
 	private VerticalMarqueeTextView VMTV;
@@ -18,19 +16,17 @@ public class Example extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		// Instantiate the TextView to be used with VMTV.
-		textView = (TextView) findViewById(R.id.vmTextView);
-		// Set the TextViews movement method so that it can scroll.
-		textView.setMovementMethod(new ScrollingMovementMethod());
+		// Instantiate the VMTV.
+		VMTV = (VerticalMarqueeTextView) findViewById(R.id.vmTextView);
 
-		// Instantiate the VMTV passing this as the Activity and the
-		// TextView that you wish to marquee.
-		VMTV = new VerticalMarqueeTextView(this, textView);
+		// Set the VMTV movement method so that it can scroll.
+		VMTV.setMovementMethod(new ScrollingMovementMethod());
 
 		// Alternately you may also pass in the (long) duration between scroll
 		// moves and the (int) pixelYOffSet amount that you wish to scroll by.
-		// VMTV = new VerticalMarqueeTextView(this, textView, duration,
-		// pixelYOffSet);
+		// Using the following method calls:
+		// VMTV.setDuration(duration);
+		// VMTV.setPixelYOffSet(pixelYOffSet);
 
 		// Optionally pause the marquee to wait for the Activity to start.
 		VMTV.pauseMarquee();

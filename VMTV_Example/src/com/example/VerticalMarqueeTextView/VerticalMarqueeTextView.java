@@ -1,17 +1,19 @@
 package com.example.VerticalMarqueeTextView;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.util.AttributeSet;
 import android.widget.TextView;
 
-public class VerticalMarqueeTextView {
+public class VerticalMarqueeTextView extends TextView {
 
 	private boolean isUserScrolling, isPaused, stop;
 	private boolean isNotDrawn = true;
 	private final Activity activity;
-	private final TextView textView;
-	private long duration = 65l;
-	private int pixelYOffSet = 1;
+	// private final TextView textView;
+	private long duration;
+	private int pixelYOffSet;
 
 	/**
 	 * 
@@ -20,52 +22,63 @@ public class VerticalMarqueeTextView {
 	 * scrollBy(0, pixelYOffSet). Defaults to 65L. The (int) amount of Y pixels
 	 * to scroll by defaults to 1.
 	 * 
-	 * @param activity
-	 *            The UI (Activity) that the marquee will take place on.
-	 * @param textView
-	 *            The (TextView) that is to marquee vertically.
 	 */
-	public VerticalMarqueeTextView(Activity activity, TextView textView) {
+	public VerticalMarqueeTextView(Context context, AttributeSet attrs,
+			int defStyle) {
+		super(context, attrs, defStyle);
 
-		this.activity = activity;
-		this.textView = textView;
+		this.activity = (Activity) context;
+		// this.textView = this;
 
+		init();
+	}
+
+	/**
+	 * 
+	 * Creates a vertically auto scrolling marquee of a TextView within an
+	 * Activity. The (long) duration in milliseconds between calls to the next
+	 * scrollBy(0, pixelYOffSet). Defaults to 65L. The (int) amount of Y pixels
+	 * to scroll by defaults to 1.
+	 * 
+	 */
+	public VerticalMarqueeTextView(Context context, AttributeSet attrs) {
+
+		super(context, attrs);
+
+		this.activity = (Activity) context;
+		// this.textView = this;
+
+		init();
+	}
+
+	/**
+	 * 
+	 * Creates a vertically auto scrolling marquee of a TextView within an
+	 * Activity. The (long) duration in milliseconds between calls to the next
+	 * scrollBy(0, pixelYOffSet). Defaults to 65L. The (int) amount of Y pixels
+	 * to scroll by defaults to 1.
+	 * 
+	 */
+	public VerticalMarqueeTextView(Context context) {
+		super(context);
+
+		this.activity = (Activity) context;
+		// this.textView = this;
+
+		init();
+	}
+
+	/**
+	 * Initialize fields and start the marquee.
+	 */
+	private void init() {
 		setDuration(65l);
 		setPixelYOffSet(1);
 
 		isUserScrolling = isPaused = stop = false;
 
 		startMarquee();
-	}
 
-	/**
-	 * Creates a vertically auto scrolling marquee of a TextView within an
-	 * Activity.
-	 * 
-	 * @param activity
-	 *            The UI (Activity) that the marquee will take place on.
-	 * @param textView
-	 *            The (TextView) that is to vertical marquee.
-	 * @param duration
-	 *            The (long) duration in milliseconds between calls to the next
-	 *            scrollBy(0, pixelYOffSet). Defaults to 65L if value is less
-	 *            than or equal to 0.
-	 * @param pixelYOffSet
-	 *            The (int) amount of Y pixels to scroll by. Defaults to 1 if
-	 *            value is less.
-	 */
-	public VerticalMarqueeTextView(Activity activity, TextView textView,
-			long duration, int pixelYOffSet) {
-
-		this.activity = activity;
-		this.textView = textView;
-
-		setDuration(duration);
-		setPixelYOffSet(pixelYOffSet);
-
-		isUserScrolling = isPaused = stop = false;
-
-		startMarquee();
 	}
 
 	/**
@@ -172,7 +185,8 @@ public class VerticalMarqueeTextView {
 			while (!stop) {
 
 				// Allows scrolling to resume after textView has been released.
-				if (!textView.isPressed() && isUserScrolling && !isPaused) {
+				if (!(VerticalMarqueeTextView.this).isPressed()
+						&& isUserScrolling && !isPaused) {
 					isUserScrolling = false;
 				}
 
@@ -188,11 +202,12 @@ public class VerticalMarqueeTextView {
 
 					activity.runOnUiThread(new Runnable() {
 
+						@Override
 						public void run() {
 
 							// If the user is manually scrolling pause the auto
 							// scrolling marquee
-							if (textView.isPressed()) {
+							if ((VerticalMarqueeTextView.this).isPressed()) {
 
 								isUserScrolling = true;
 
@@ -200,16 +215,18 @@ public class VerticalMarqueeTextView {
 
 								// if textView has reached or exceeded the last
 								// Y pixel scroll back to top
-								if (textView.getScrollY() >= pixelCount) {
+								if ((VerticalMarqueeTextView.this).getScrollY() >= pixelCount) {
 
-									textView.scrollTo(0, 0);
+									(VerticalMarqueeTextView.this).scrollTo(0,
+											0);
 
 								} else { // Otherwise scroll by the pixelYOffSet
 
-									textView.scrollBy(0, pixelYOffSet);
+									(VerticalMarqueeTextView.this).scrollBy(0,
+											pixelYOffSet);
 								}
 
-								textView.invalidate();
+								(VerticalMarqueeTextView.this).invalidate();
 							}
 
 						}
@@ -220,20 +237,28 @@ public class VerticalMarqueeTextView {
 			return null;
 		}
 
+		@Override
+		protected void onProgressUpdate(Void... values) {
+			// TODO Auto-generated method stub
+			super.onProgressUpdate(values);
+		}
+
 		private boolean textViewNotDrawn() {
 
 			activity.runOnUiThread(new Runnable() {
 
+				@Override
 				public void run() {
 					// Checks to see if TextView has been drawn.
 					// In theory line count should be greater than 0 if drawn.
-					if (textView.getLineCount() > 0) {
+					if ((VerticalMarqueeTextView.this).getLineCount() > 0) {
 						// Calculate the total pixel height that needs to be
 						// scrolled.
 						// May need additional calculations if there is
 						// additional padding.
-						pixelCount = textView.getLineHeight()
-								* textView.getLineCount();
+						pixelCount = (VerticalMarqueeTextView.this)
+								.getLineHeight()
+								* (VerticalMarqueeTextView.this).getLineCount();
 						isNotDrawn = false;
 					}
 
