@@ -11,7 +11,6 @@ public class VerticalMarqueeTextView extends TextView {
 	private boolean isUserScrolling, isPaused, stop;
 	private boolean isNotDrawn = true;
 	private final Activity activity;
-	// private final TextView textView;
 	private long duration;
 	private int pixelYOffSet;
 
@@ -28,7 +27,6 @@ public class VerticalMarqueeTextView extends TextView {
 		super(context, attrs, defStyle);
 
 		this.activity = (Activity) context;
-		// this.textView = this;
 
 		init();
 	}
@@ -46,7 +44,6 @@ public class VerticalMarqueeTextView extends TextView {
 		super(context, attrs);
 
 		this.activity = (Activity) context;
-		// this.textView = this;
 
 		init();
 	}
@@ -63,7 +60,6 @@ public class VerticalMarqueeTextView extends TextView {
 		super(context);
 
 		this.activity = (Activity) context;
-		// this.textView = this;
 
 		init();
 	}
@@ -170,7 +166,7 @@ public class VerticalMarqueeTextView extends TextView {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			// Check to see if the textView has been drawn to get proper sizing.
+			// Check to see if the VMTV has been drawn to get proper sizing.
 			while (textViewNotDrawn()) {
 				try {
 					Thread.sleep(1000);
@@ -184,7 +180,7 @@ public class VerticalMarqueeTextView extends TextView {
 			// Cannot be restarted.
 			while (!stop) {
 
-				// Allows scrolling to resume after textView has been released.
+				// Allows scrolling to resume after VMTV has been released.
 				if (!(VerticalMarqueeTextView.this).isPressed()
 						&& isUserScrolling && !isPaused) {
 					isUserScrolling = false;
@@ -213,7 +209,7 @@ public class VerticalMarqueeTextView extends TextView {
 
 							} else { // Otherwise auto scroll marquee
 
-								// if textView has reached or exceeded the last
+								// if VMTV has reached or exceeded the last
 								// Y pixel scroll back to top
 								if ((VerticalMarqueeTextView.this).getScrollY() >= pixelCount) {
 
@@ -249,7 +245,7 @@ public class VerticalMarqueeTextView extends TextView {
 
 				@Override
 				public void run() {
-					// Checks to see if TextView has been drawn.
+					// Checks to see if VMTV has been drawn.
 					// In theory line count should be greater than 0 if drawn.
 					if ((VerticalMarqueeTextView.this).getLineCount() > 0) {
 						// Calculate the total pixel height that needs to be
