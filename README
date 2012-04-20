@@ -5,8 +5,12 @@ Usage:
 Add VerticalMarqueeTextView.java (VMTV) to your project.
 Change the VMTV package to that of your project.
 Create an instance of the VMTV class.
-In the onCreate() method instantiate your instance of the VMTV class.
+In the onCreate() method instantiate your instance of the VMTV class using findViewByID().
  optional: call the pauseMarquee() method to pause it until Activity starts.
+           use the setDuration() and or setPixelYOffset() method(s) to adjust the speed and scrolling of your VMTV.
+           
+In your xml layout use the full package name to create your VMTV within the view as you would with any other TextView and set your properties.
+	NOTE: It will error in the Graphical Layout. You can try using View.isInEditMode() if you wish but it isn't needed.
  
 You should make a call to the resumeMarquee() method in the Activities onResume() method. Likewise a call to pauseMarquee() should be made in the Activities onPause() method.
 
